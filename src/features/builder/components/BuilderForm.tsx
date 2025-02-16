@@ -5,8 +5,13 @@ import QuestionForm from "./QuestionForm";
 import styles from "../builder.module.scss";
 
 const BuilderForm = () => {
-  const { questions, handleAddNewQuestions, submitQuestions, loading } =
-    useBuilderContext();
+  const {
+    questions,
+    handleAddNewQuestions,
+    submitQuestions,
+    loading,
+    handleClearQuestions,
+  } = useBuilderContext();
 
   return (
     <form className={styles["builder"]}>
@@ -24,6 +29,9 @@ const BuilderForm = () => {
         </Button>
       </div>
       <div className={styles["builder__footer"]}>
+        <Button variant="secondary" onClick={handleClearQuestions}>
+          Clear
+        </Button>
         <Button onClick={submitQuestions} isLoading={loading}>
           Submit
         </Button>

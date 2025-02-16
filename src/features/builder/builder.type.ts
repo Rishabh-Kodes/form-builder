@@ -18,6 +18,7 @@ export type BuilderContextType = {
   handleAddNewQuestions: () => void;
   handleQuestionChange: (index: number, question: QuestionType) => void;
   handleDeleteQuestion: (index: number) => void;
+  handleClearQuestions: () => void;
   submitQuestions: () => void;
   loading: boolean;
 };

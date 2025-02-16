@@ -20,6 +20,9 @@
     margin-top: auto;
     padding: 16px;
     border-top: 1px dashed var(--colors-tertiary);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
   }
 
   &__question {

@@ -48,12 +48,24 @@ const QuestionSelectOptions = ({ groupIndex }: QuestionSelectOptionsProps) => {
             name="label"
             value={option.label}
             onChange={(e) => handleOptionsChange(index, e)}
+            helperText={errors[`${groupIndex}.options.${index}.label`]}
+            state={
+              errors[`${groupIndex}.options.${index}.label`]
+                ? "error"
+                : "default"
+            }
           />
           <Input
             label="Value"
             name="value"
             value={option.value}
             onChange={(e) => handleOptionsChange(index, e)}
+            helperText={errors[`${groupIndex}.options.${index}.value`]}
+            state={
+              errors[`${groupIndex}.options.${index}.value`]
+                ? "error"
+                : "default"
+            }
           />
         </div>
       ))}

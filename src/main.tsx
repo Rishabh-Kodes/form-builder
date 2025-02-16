@@ -6,7 +6,6 @@ import App from "./features/app";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    {/* <App /> */}
     <App />
     <Toaster />
   </StrictMode>

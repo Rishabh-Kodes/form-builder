@@ -7,8 +7,8 @@ import {
 
 const QuestionOptionSchema = z.object({
   id: z.string(),
-  key: z.string(),
-  value: z.string(),
+  label: z.string().min(1, { message: "Label is required" }),
+  value: z.string().min(1, { message: "Value is required" }),
 });
 
 const QuestionSchema = z

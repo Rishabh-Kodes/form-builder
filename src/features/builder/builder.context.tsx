@@ -24,7 +24,6 @@ export const BuilderProvider = ({ children }: BuilderProviderProps) => {
     const id = nanoid(12);
     return [{ ...DefaultQuestion, id }];
   });
-
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [loading, setLoading] = useState<boolean>(false);
 
@@ -50,6 +49,12 @@ export const BuilderProvider = ({ children }: BuilderProviderProps) => {
       newQuestions.splice(index, 1);
       return newQuestions;
     });
+  };
+
+  const handleClearQuestions = () => {
+    const question = [{ ...DefaultQuestion, id: nanoid(12) }];
+    setQuestions(question);
+    localStorage.setItem(UnsavedQuestionsKey, JSON.stringify(question));
   };
 
   const saveQuestionsToAPI = (questions: QuestionType[]): Promise<void> => {
@@ -83,6 +88,7 @@ export const BuilderProvider = ({ children }: BuilderProviderProps) => {
       try {
         await saveQuestionsToAPI(questions);
         localStorage.setItem(SavedQuestionsKey, JSON.stringify(questions));
+        localStorage.removeItem(UnsavedQuestionsKey);
         toast.success("Questions submitted");
       } catch (error) {
         console.error(error);
@@ -92,10 +98,8 @@ export const BuilderProvider = ({ children }: BuilderProviderProps) => {
     setLoading(false);
   };
 
-  // Autosave questions in localStorage every 5 seconds
   useEffect(() => {
     const interval = setInterval(() => {
-      console.log("Saving questions to localStorage");
       localStorage.setItem(UnsavedQuestionsKey, JSON.stringify(questions));
     }, 5000);
 
@@ -111,6 +115,7 @@ export const BuilderProvider = ({ children }: BuilderProviderProps) => {
         handleQuestionChange,
         handleDeleteQuestion,
         submitQuestions,
+        handleClearQuestions,
         errors,
         loading,
       }}
