@@ -1,0 +1,51 @@
+.input {
+  &__container {
+    width: 100%;
+  }
+
+  &__label {
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 18px;
+    margin-bottom: 8px;
+    color: var(--colors-secondary);
+    display: block;
+  }
+
+  &__control {
+    width: 100%;
+    background: var(--colors-background);
+    height: 48px;
+    font-size: 16px;
+    line-height: 24px;
+    font-weight: 400;
+    color: var(--colors-foreground);
+    border: none;
+    border-radius: 8px;
+    padding: 0px 16px;
+    outline: 1px solid var(--colors-tertiary);
+    display: block;
+
+    &--error {
+      outline-width: 2px;
+      outline-color: var(--colors-error);
+    }
+
+    &:focus {
+      outline-width: 2px;
+      outline-color: var(--colors-primary);
+    }
+  }
+
+  &__helper-text {
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 18px;
+    margin-top: 4px;
+    color: var(--colors-secondary);
+
+    &--error {
+      color: var(--colors-error);
+    }
+  }
+}
