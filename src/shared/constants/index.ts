@@ -35,6 +35,7 @@ export const DefaultQuestion: QuestionType = {
   helperText: "",
   regexType: REGEX_TYPE_NONE,
   customRegexPattern: "",
+  defaultValue: "",
 };
 
 export const UnsavedQuestionsKey = "unsaved_questions";

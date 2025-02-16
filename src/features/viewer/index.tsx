@@ -12,7 +12,15 @@ const Viewer = () => {
     return JSON.parse(localStorage.getItem(SavedQuestionsKey) || "[]");
   }, []);
 
-  const [answers, setAnswers] = useState<{ [key: string]: string }>({});
+  const [answers, setAnswers] = useState<{ [key: string]: string }>(
+    questions.reduce(
+      (acc: { [key: string]: string }, question: QuestionType) => {
+        acc[question.id] = question.defaultValue || "";
+        return acc;
+      },
+      {}
+    )
+  );
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
 
   const handleInputChange = (id: string, value: string) => {
@@ -54,6 +62,7 @@ const Viewer = () => {
           <>
             {questions.map((question: QuestionType) => (
               <InputRenderer
+                key={question.id}
                 type={question.type}
                 value={answers[question.id] || ""}
                 onChange={(e) => handleInputChange(question.id, e.target.value)}

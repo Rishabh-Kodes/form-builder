@@ -3,6 +3,7 @@ import { Button, Checkbox, Input, Select } from "../../../components";
 import {
   INPUT_TYPE_SELECT,
   QuestionTypes,
+  REGEX_TYPE_NONE,
   RegexOptions,
 } from "../../../shared/constants";
 import { useBuilderContext } from "../builder.context";
@@ -17,17 +18,16 @@ const QuestionForm = ({ index }: { index: number }) => {
 
   const handleInputChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-      handleQuestionChange(index, {
+      const updatedQuestion = {
         ...question,
         [e.target.name]: e.target.value,
-        options: question.type === INPUT_TYPE_SELECT ? [] : question.options,
-        regexType:
-          question.type !== INPUT_TYPE_SELECT ? "none" : question.regexType,
-        customRegexPattern:
-          question.type !== INPUT_TYPE_SELECT
-            ? ""
-            : question.customRegexPattern,
-      });
+        options: question.type !== INPUT_TYPE_SELECT ? [] : question.options,
+      };
+      if (e.target.name === "type" && e.target.value === INPUT_TYPE_SELECT) {
+        updatedQuestion.regexType = REGEX_TYPE_NONE;
+        updatedQuestion.customRegexPattern = "";
+      }
+      handleQuestionChange(index, updatedQuestion);
     },
     [handleQuestionChange, index, question]
   );
@@ -71,6 +71,29 @@ const QuestionForm = ({ index }: { index: number }) => {
       {question.type === INPUT_TYPE_SELECT && (
         <QuestionSelectOptions groupIndex={index} />
       )}
+
+      {question.type == INPUT_TYPE_SELECT ? (
+        <Select
+          options={question.options}
+          label="Default Value"
+          name="defaultValue"
+          value={question.defaultValue}
+          onChange={handleInputChange}
+          helperText={errors[`${index}.defaultValue`]}
+          state={errors[`${index}.defaultValue`] ? "error" : "default"}
+        />
+      ) : (
+        <Input
+          type={question.type}
+          label="Default Value"
+          name="defaultValue"
+          value={question.defaultValue}
+          onChange={handleInputChange}
+          helperText={errors[`${index}.defaultValue`]}
+          state={errors[`${index}.defaultValue`] ? "error" : "default"}
+        />
+      )}
+
       <Input
         label="Helper Text"
         name="helperText"
@@ -79,6 +102,7 @@ const QuestionForm = ({ index }: { index: number }) => {
         helperText={errors[`${index}.helperText`]}
         state={errors[`${index}.helperText`] ? "error" : "default"}
       />
+
       {question.type !== INPUT_TYPE_SELECT && (
         <>
           <Select

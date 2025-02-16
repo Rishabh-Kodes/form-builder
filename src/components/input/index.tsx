@@ -31,12 +31,14 @@ const Input = ({
 
   return (
     <div className={containerClassNames}>
-      <label className={labelClassNames}>
-        {label}
-        {isRequired && <span className={styles["input__required"]}>*</span>}
-      </label>
+      {label && (
+        <label className={labelClassNames}>
+          {label}
+          {isRequired && <span className={styles["input__required"]}>*</span>}
+        </label>
+      )}
       <input className={inputClassNames} autoCapitalize="off" {...props} />
-      <p className={helperTextClassNames}>{helperText}</p>
+      {helperText && <p className={helperTextClassNames}>{helperText}</p>}
     </div>
   );
 };

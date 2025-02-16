@@ -3,6 +3,7 @@ import {
   INPUT_TYPE_SELECT,
   REGEX_TYPE_CUSTOM,
   RegexOptions,
+  RegexPatterns,
 } from "../shared/constants";
 
 const QuestionOptionSchema = z.object({
@@ -26,6 +27,7 @@ const QuestionSchema = z
     customRegexPattern: z.string().optional(),
     options: z.array(QuestionOptionSchema).optional(),
     isRequired: z.boolean().optional(),
+    defaultValue: z.string().optional(),
   })
   .refine(
     (data) => data.regexType !== REGEX_TYPE_CUSTOM || !!data.customRegexPattern,
@@ -41,6 +43,26 @@ const QuestionSchema = z
     {
       message: "Options are required when type is select",
       path: ["options"],
+    }
+  )
+  .refine(
+    (data) => {
+      if (
+        !data.defaultValue ||
+        data.type === INPUT_TYPE_SELECT ||
+        !data.regexType
+      )
+        return true;
+
+      const pattern =
+        data.regexType === REGEX_TYPE_CUSTOM
+          ? data.customRegexPattern
+          : RegexPatterns[data.regexType as keyof typeof RegexPatterns];
+      return pattern ? new RegExp(pattern).test(data.defaultValue) : true;
+    },
+    {
+      message: "Default value does not match the regex pattern",
+      path: ["defaultValue"],
     }
   );
 

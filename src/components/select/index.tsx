@@ -32,10 +32,12 @@ const Select = ({
 
   return (
     <div className={containerClassNames}>
-      <label className={labelClassNames}>
-        {label}
-        {isRequired && <span className={styles["select__required"]}>*</span>}
-      </label>
+      {label && (
+        <label className={labelClassNames}>
+          {label}
+          {isRequired && <span className={styles["select__required"]}>*</span>}
+        </label>
+      )}
 
       <div className={styles["select__control-container"]}>
         <select className={inputClassNames} {...props}>
@@ -49,7 +51,7 @@ const Select = ({
           ))}
         </select>
       </div>
-      <p className={helperTextClassNames}>{helperText}</p>
+      {helperText && <p className={helperTextClassNames}>{helperText}</p>}
     </div>
   );
 };

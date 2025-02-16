@@ -9,4 +9,5 @@ export type QuestionType = {
   customRegexPattern?: string;
   options?: { id: string; label: string; value: string }[];
   isRequired?: boolean;
+  defaultValue?: string;
 };
