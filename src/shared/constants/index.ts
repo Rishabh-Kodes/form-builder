@@ -24,7 +24,8 @@ export const RegexOptions = {
 
 export const RegexPatterns = {
   [REGEX_TYPE_EMAIL]: "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$",
-  [REGEX_TYPE_PHONE]: "^\\(\\d{3}\\) \\d{3}-\\d{4}$",
+  [REGEX_TYPE_PHONE]:
+    "^(\\+\\d{1,2}\\s?)?\\(?\\d{3}\\)?[\\s.-]?\\d{3}[\\s.-]?\\d{4}$|^(\\+91[\\s.-]?)?\\d{10}$",
 };
 
 export const DefaultQuestion: QuestionType = {

@@ -8,6 +8,7 @@ import InputRenderer from "./components/InputRenderer";
 import styles from "./viewer.module.scss";
 
 const Viewer = () => {
+  const [isLoading, setIsLoading] = useState(false);
   const questions = useMemo(() => {
     return JSON.parse(localStorage.getItem(SavedQuestionsKey) || "[]");
   }, []);
@@ -48,9 +49,13 @@ const Viewer = () => {
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
-
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (validate()) {
+      setIsLoading(true);
+      await new Promise((resolve) => setTimeout(resolve, 2000));
+      setAnswers({});
+      setErrors({});
+      setIsLoading(false);
       toast.success("Submitted answers");
     }
   };
@@ -79,7 +84,9 @@ const Viewer = () => {
         )}
       </div>
       <div className={styles["viewer__footer"]}>
-        <Button onClick={handleSubmit}>Submit</Button>
+        <Button onClick={handleSubmit} isLoading={isLoading}>
+          Submit
+        </Button>
       </div>
     </div>
   );
