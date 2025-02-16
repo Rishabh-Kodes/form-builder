@@ -9,6 +9,7 @@ const Select = ({
   helperText,
   className,
   options,
+  isRequired,
   ...props
 }: SelectProps) => {
   const containerClassNames = cn(
@@ -31,17 +32,27 @@ const Select = ({
 
   return (
     <div className={containerClassNames}>
-      <label className={labelClassNames}>{label}</label>
-      <select className={inputClassNames} {...props}>
-        {options?.map((option) => (
-          <option key={option.value} value={option.value}>
-            {option.label}
+      <label className={labelClassNames}>
+        {label}
+        {isRequired && <span className={styles["select__required"]}>*</span>}
+      </label>
+
+      <div className={styles["select__control-container"]}>
+        <select className={inputClassNames} {...props}>
+          <option value="" hidden>
+            Select an option
           </option>
-        ))}
-      </select>
+          {options?.map((option) => (
+            <option key={option.value} value={option.value}>
+              {option.label}
+            </option>
+          ))}
+        </select>
+      </div>
       <p className={helperTextClassNames}>{helperText}</p>
     </div>
   );
 };
 
 export default Select;
+export type { SelectProps };

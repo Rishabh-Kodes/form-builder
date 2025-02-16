@@ -5,14 +5,11 @@ import QuestionForm from "./QuestionForm";
 import styles from "../builder.module.scss";
 
 const BuilderForm = () => {
-  const { questions, handleAddNewQuestions, submitQuestions, errors, loading } =
+  const { questions, handleAddNewQuestions, submitQuestions, loading } =
     useBuilderContext();
-
-  console.log(errors);
 
   return (
     <form className={styles["builder"]}>
-      <h1 className={styles["builder__header"]}>Form Builder</h1>
       <div className={styles["builder__container"]}>
         {questions.map((question, index) => (
           <QuestionForm key={question.id} index={index} />

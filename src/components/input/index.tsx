@@ -42,3 +42,4 @@ const Input = ({
 };
 
 export default Input;
+export type { InputProps };

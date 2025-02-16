@@ -1,6 +1,22 @@
 .select {
   &__container {
     width: 100%;
+  }
+
+  &__label {
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 18px;
+    margin-bottom: 8px;
+    color: var(--colors-secondary);
+    display: block;
+  }
+
+  &__required {
+    color: var(--colors-error);
+  }
+
+  &__control-container {
     position: relative;
 
     &::after {
@@ -15,15 +31,6 @@
       border-top: none;
       border-right: none;
     }
-  }
-
-  &__label {
-    font-size: 12px;
-    font-weight: 600;
-    line-height: 18px;
-    margin-bottom: 8px;
-    color: var(--colors-secondary);
-    display: block;
   }
 
   &__control {

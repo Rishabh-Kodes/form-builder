@@ -73,8 +73,8 @@ const QuestionForm = ({ index }: { index: number }) => {
         helperText={errors[`${index}.helperText`]}
         state={errors[`${index}.helperText`] ? "error" : "default"}
       />
-      <label htmlFor="regexType">Regex Validation</label>
       <Select
+        label="Regex Validation"
         id="regexType"
         name="regexType"
         value={question.regexType}
@@ -102,7 +102,11 @@ const QuestionForm = ({ index }: { index: number }) => {
         <label className={styles["builder__question-action-label"]}>
           Required:
         </label>
-        <Checkbox name="isRequired" onChange={handleIsRequiredChange} />
+        <Checkbox
+          name="isRequired"
+          checked={question.isRequired}
+          onChange={handleIsRequiredChange}
+        />
         <span className={styles["builder__question-actions-separator"]} />
         <Button
           variant="secondary"

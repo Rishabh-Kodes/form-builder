@@ -21,7 +21,6 @@ const QuestionSelectOptions = ({ groupIndex }: QuestionSelectOptionsProps) => {
         ...newOptions[optionIndex],
         [e.target.name]: e.target.value,
       };
-      console.log(newOptions);
       handleQuestionChange(groupIndex, {
         ...question,
         options: newOptions,
@@ -35,7 +34,7 @@ const QuestionSelectOptions = ({ groupIndex }: QuestionSelectOptionsProps) => {
       ...question,
       options: [
         ...(question?.options || []),
-        { id: nanoid(12), key: "", value: "" },
+        { id: nanoid(12), label: "", value: "" },
       ],
     });
   }, [handleQuestionChange, groupIndex, question]);
@@ -43,14 +42,11 @@ const QuestionSelectOptions = ({ groupIndex }: QuestionSelectOptionsProps) => {
   return (
     <div className={styles["builder__select-options"]}>
       {options?.map((option, index) => (
-        <div
-          className={styles["builder__select-options-item"]}
-          // key={option.key}
-        >
+        <div className={styles["builder__select-options-item"]} key={option.id}>
           <Input
-            label="Key"
-            name="key"
-            value={option.key}
+            label="Label"
+            name="label"
+            value={option.label}
             onChange={(e) => handleOptionsChange(index, e)}
           />
           <Input

@@ -1,0 +1,32 @@
+.layout {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+
+  &__header {
+    height: 60px;
+    padding: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px dashed var(--colors-tertiary);
+  }
+
+  &__header-title {
+    font-size: 32px;
+    font-weight: 600;
+    line-height: 32px;
+    color: var(--colors-primary);
+    position: sticky;
+    top: 0;
+    z-index: 1;
+  }
+
+  &__body {
+    display: flex;
+    flex-direction: column;
+
+    flex: 1;
+    overflow-y: auto;
+  }
+}
