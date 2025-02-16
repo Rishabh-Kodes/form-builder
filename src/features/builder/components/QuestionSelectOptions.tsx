@@ -1,47 +1,79 @@
+import { useCallback } from "react";
 import { Button, Input } from "../../../components";
+import { useBuilderContext } from "../builder.context";
 import styles from "../builder.module.scss";
-import { QuestionType } from "../builder.type";
+import { nanoid } from "nanoid";
 
 type QuestionSelectOptionsProps = {
-  options: QuestionType["options"];
-  handleOptionsChange: (
-    index: number,
-    e: React.ChangeEvent<HTMLInputElement>
-  ) => void;
-  addOption: () => void;
+  groupIndex: number;
 };
 
-const QuestionSelectOptions = ({
-  options,
-  handleOptionsChange,
-  addOption,
-}: QuestionSelectOptionsProps) => (
-  <div className={styles["builder__select-options"]}>
-    {options?.map((option, index) => (
-      <div className={styles["builder__select-options-item"]} key={option.key}>
-        <Input
-          label="Key"
-          name="key"
-          value={option.key}
-          onChange={(e) => handleOptionsChange(index, e)}
-        />
-        <Input
-          label="Value"
-          name="value"
-          value={option.value}
-          onChange={(e) => handleOptionsChange(index, e)}
-        />
-      </div>
-    ))}
-    <Button
-      variant="secondary"
-      size="small"
-      className={styles["builder__select-options-button"]}
-      onClick={addOption}
-    >
-      Add Option
-    </Button>
-  </div>
-);
+const QuestionSelectOptions = ({ groupIndex }: QuestionSelectOptionsProps) => {
+  const { questions, errors, handleQuestionChange } = useBuilderContext();
+  const question = questions[groupIndex];
+  const options = question?.options || [];
+  const error = errors[`${groupIndex}.options`];
+
+  const handleOptionsChange = useCallback(
+    (optionIndex: number, e: React.ChangeEvent<HTMLInputElement>) => {
+      const newOptions = [...(question?.options || [])];
+      newOptions[optionIndex] = {
+        ...newOptions[optionIndex],
+        [e.target.name]: e.target.value,
+      };
+      console.log(newOptions);
+      handleQuestionChange(groupIndex, {
+        ...question,
+        options: newOptions,
+      });
+    },
+    [handleQuestionChange, question, groupIndex]
+  );
+
+  const addOption = useCallback(() => {
+    handleQuestionChange(groupIndex, {
+      ...question,
+      options: [
+        ...(question?.options || []),
+        { id: nanoid(12), key: "", value: "" },
+      ],
+    });
+  }, [handleQuestionChange, groupIndex, question]);
+
+  return (
+    <div className={styles["builder__select-options"]}>
+      {options?.map((option, index) => (
+        <div
+          className={styles["builder__select-options-item"]}
+          // key={option.key}
+        >
+          <Input
+            label="Key"
+            name="key"
+            value={option.key}
+            onChange={(e) => handleOptionsChange(index, e)}
+          />
+          <Input
+            label="Value"
+            name="value"
+            value={option.value}
+            onChange={(e) => handleOptionsChange(index, e)}
+          />
+        </div>
+      ))}
+      {error && (
+        <div className={styles["builder__select-options-error"]}>{error}</div>
+      )}
+      <Button
+        variant="secondary"
+        size="small"
+        className={styles["builder__select-options-button"]}
+        onClick={addOption}
+      >
+        Add Option
+      </Button>
+    </div>
+  );
+};
 
 export default QuestionSelectOptions;

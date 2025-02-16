@@ -9,8 +9,14 @@ const Button = ({
   variant = "primary",
   size = "medium",
   isFullWidth = true,
+  isLoading = false,
+  isLoadingText = "Loading...",
+  isDisabled = false,
+  disabled,
   ...props
 }: ButtonProps) => {
+  const _isDisabled = isDisabled || disabled || isLoading;
+
   return (
     <button
       className={cn(
@@ -21,9 +27,10 @@ const Button = ({
         className
       )}
       type="button"
+      disabled={_isDisabled}
       {...props}
     >
-      {children}
+      {isLoading ? isLoadingText : children}
     </button>
   );
 };

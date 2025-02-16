@@ -1,23 +1,32 @@
+import { nanoid } from "nanoid";
 import { createContext, useContext, useEffect, useState } from "react";
-import { DefaultQuestion } from "../../constants";
+import toast from "react-hot-toast";
+import {
+  DefaultQuestion,
+  SavedQuestionsKey,
+  UnsavedQuestionsKey,
+} from "../../constants";
+import { QuestionsSchema } from "../../validators/questions.validator";
 import {
   BuilderContextType,
   BuilderProviderProps,
   QuestionType,
 } from "./builder.type";
-import { nanoid } from "nanoid";
 
 const BuilderContext = createContext<BuilderContextType | undefined>(undefined);
 
 export const BuilderProvider = ({ children }: BuilderProviderProps) => {
   const [questions, setQuestions] = useState<QuestionType[]>(() => {
-    const savedQuestions = localStorage.getItem("questions");
+    const savedQuestions = localStorage.getItem(UnsavedQuestionsKey);
     if (savedQuestions) {
       return JSON.parse(savedQuestions);
     }
     const id = nanoid(12);
     return [{ ...DefaultQuestion, id }];
   });
+
+  const [errors, setErrors] = useState<Record<string, string>>({});
+  const [loading, setLoading] = useState<boolean>(false);
 
   const handleAddNewQuestions = () => {
     const id = nanoid(12);
@@ -43,11 +52,51 @@ export const BuilderProvider = ({ children }: BuilderProviderProps) => {
     });
   };
 
+  const saveQuestionsToAPI = (questions: QuestionType[]): Promise<void> => {
+    return new Promise((resolve, reject) => {
+      const delay = Math.floor(Math.random() * 2000) + 1000; // random delay between 1-3 seconds
+      setTimeout(() => {
+        try {
+          localStorage.setItem("questions", JSON.stringify(questions));
+          if (Math.random() < 0.2) {
+            throw new Error("Failed to save questions");
+          }
+          resolve();
+        } catch (error) {
+          reject(error);
+        }
+      }, delay);
+    });
+  };
+
+  const submitQuestions = async () => {
+    setLoading(true);
+    const result = QuestionsSchema.safeParse(questions);
+    if (!result.success) {
+      const errorObject: Record<string, string> = {};
+      result.error.issues.forEach((issue) => {
+        errorObject[issue.path.join(".")] = issue.message;
+      });
+      setErrors(errorObject);
+    } else {
+      setErrors({});
+      try {
+        await saveQuestionsToAPI(questions);
+        localStorage.setItem(SavedQuestionsKey, JSON.stringify(questions));
+        toast.success("Questions submitted");
+      } catch (error) {
+        console.error(error);
+        toast.error("Error submitting questions");
+      }
+    }
+    setLoading(false);
+  };
+
   // Autosave questions in localStorage every 5 seconds
   useEffect(() => {
     const interval = setInterval(() => {
       console.log("Saving questions to localStorage");
-      localStorage.setItem("questions", JSON.stringify(questions));
+      localStorage.setItem(UnsavedQuestionsKey, JSON.stringify(questions));
     }, 5000);
 
     return () => clearInterval(interval);
@@ -61,6 +110,9 @@ export const BuilderProvider = ({ children }: BuilderProviderProps) => {
         handleAddNewQuestions,
         handleQuestionChange,
         handleDeleteQuestion,
+        submitQuestions,
+        errors,
+        loading,
       }}
     >
       {children}

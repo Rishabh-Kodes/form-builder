@@ -32,10 +32,10 @@ const Input = ({
   return (
     <div className={containerClassNames}>
       <label className={labelClassNames}>
-        {label}{" "}
+        {label}
         {isRequired && <span className={styles["input__required"]}>*</span>}
       </label>
-      <input className={inputClassNames} {...props} />
+      <input className={inputClassNames} autoCapitalize="off" {...props} />
       <p className={helperTextClassNames}>{helperText}</p>
     </div>
   );

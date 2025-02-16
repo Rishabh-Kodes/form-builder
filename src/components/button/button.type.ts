@@ -6,4 +6,5 @@ export type ButtonProps = {
   isLoading?: boolean;
   isDisabled?: boolean;
   isFullWidth?: boolean;
+  isLoadingText?: string;
 } & ButtonHTMLAttributes<HTMLButtonElement>;
