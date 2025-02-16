@@ -1,4 +1,4 @@
-import { cn } from "../../utils";
+import { cn } from "../../shared/utils";
 import { CheckboxProps } from "./checkbox.type";
 
 import styles from "./checkbox.module.scss";

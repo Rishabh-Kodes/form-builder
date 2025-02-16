@@ -3,7 +3,7 @@ import {
   INPUT_TYPE_SELECT,
   REGEX_TYPE_CUSTOM,
   RegexOptions,
-} from "../constants";
+} from "../shared/constants";
 
 const QuestionOptionSchema = z.object({
   id: z.string(),

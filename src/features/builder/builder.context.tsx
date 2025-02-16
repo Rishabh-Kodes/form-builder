@@ -5,13 +5,10 @@ import {
   DefaultQuestion,
   SavedQuestionsKey,
   UnsavedQuestionsKey,
-} from "../../constants";
+} from "../../shared/constants";
+import { QuestionType } from "../../shared/types";
 import { QuestionsSchema } from "../../validators/questions.validator";
-import {
-  BuilderContextType,
-  BuilderProviderProps,
-  QuestionType,
-} from "./builder.type";
+import { BuilderContextType, BuilderProviderProps } from "./builder.type";
 
 const BuilderContext = createContext<BuilderContextType | undefined>(undefined);
 

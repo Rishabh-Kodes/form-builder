@@ -1,5 +1,5 @@
+import { cn } from "../../shared/utils";
 import { SelectProps } from "./select.type";
-import { cn } from "../../utils";
 
 import styles from "./select.module.scss";
 

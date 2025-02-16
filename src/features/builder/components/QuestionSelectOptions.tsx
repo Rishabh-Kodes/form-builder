@@ -1,8 +1,9 @@
+import { nanoid } from "nanoid";
 import { useCallback } from "react";
 import { Button, Input } from "../../../components";
 import { useBuilderContext } from "../builder.context";
+
 import styles from "../builder.module.scss";
-import { nanoid } from "nanoid";
 
 type QuestionSelectOptionsProps = {
   groupIndex: number;

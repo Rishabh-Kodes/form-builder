@@ -1,7 +1,7 @@
 import { useState } from "react";
 import toast from "react-hot-toast";
 import { Button } from "../../components";
-import { SavedQuestionsKey } from "../../constants";
+import { SavedQuestionsKey } from "../../shared/constants";
 import Builder from "../builder";
 import Viewer from "../viewer";
 

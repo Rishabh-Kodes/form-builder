@@ -1,10 +1,10 @@
 import { useMemo, useState } from "react";
-import { Button } from "../../components";
-import { RegexPatterns, SavedQuestionsKey } from "../../constants";
-import { QuestionType } from "../builder/builder.type";
-
 import toast from "react-hot-toast";
+import { Button } from "../../components";
+import { RegexPatterns, SavedQuestionsKey } from "../../shared/constants";
+import { QuestionType } from "../../shared/types";
 import InputRenderer from "./components/InputRenderer";
+
 import styles from "./viewer.module.scss";
 
 const Viewer = () => {

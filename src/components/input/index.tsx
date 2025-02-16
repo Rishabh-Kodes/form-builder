@@ -1,7 +1,7 @@
+import { cn } from "../../shared/utils";
 import { InputProps } from "./input.type";
 
 import styles from "./input.module.scss";
-import { cn } from "../../utils";
 
 const Input = ({
   label,

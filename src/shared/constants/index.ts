@@ -1,4 +1,4 @@
-import { QuestionType } from "../features/builder/builder.type";
+import { QuestionType } from "../types";
 
 export const INPUT_TYPE_TEXT = "text";
 export const INPUT_TYPE_NUMBER = "number";

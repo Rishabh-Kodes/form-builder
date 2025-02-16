@@ -4,7 +4,7 @@ import {
   INPUT_TYPE_SELECT,
   QuestionTypes,
   RegexOptions,
-} from "../../../constants";
+} from "../../../shared/constants";
 import { useBuilderContext } from "../builder.context";
 import QuestionSelectOptions from "./QuestionSelectOptions";
 
@@ -21,6 +21,12 @@ const QuestionForm = ({ index }: { index: number }) => {
         ...question,
         [e.target.name]: e.target.value,
         options: question.type === INPUT_TYPE_SELECT ? [] : question.options,
+        regexType:
+          question.type !== INPUT_TYPE_SELECT ? "none" : question.regexType,
+        customRegexPattern:
+          question.type !== INPUT_TYPE_SELECT
+            ? ""
+            : question.customRegexPattern,
       });
     },
     [handleQuestionChange, index, question]
@@ -73,29 +79,35 @@ const QuestionForm = ({ index }: { index: number }) => {
         helperText={errors[`${index}.helperText`]}
         state={errors[`${index}.helperText`] ? "error" : "default"}
       />
-      <Select
-        label="Regex Validation"
-        id="regexType"
-        name="regexType"
-        value={question.regexType}
-        onChange={handleInputChange}
-        options={Object.entries(RegexOptions).map(([value, label]) => ({
-          label,
-          value,
-        }))}
-        helperText={errors[`${index}.regexType`]}
-        state={errors[`${index}.regexType`] ? "error" : "default"}
-      />
-      {question.regexType === "custom" && (
-        <Input
-          label="Custom Regex"
-          name="customRegexPattern"
-          isRequired
-          value={question.customRegexPattern || ""}
-          onChange={handleInputChange}
-          helperText={errors[`${index}.customRegexPattern`]}
-          state={errors[`${index}.customRegexPattern`] ? "error" : "default"}
-        />
+      {question.type !== INPUT_TYPE_SELECT && (
+        <>
+          <Select
+            label="Regex Validation"
+            id="regexType"
+            name="regexType"
+            value={question.regexType}
+            onChange={handleInputChange}
+            options={Object.entries(RegexOptions).map(([value, label]) => ({
+              label,
+              value,
+            }))}
+            helperText={errors[`${index}.regexType`]}
+            state={errors[`${index}.regexType`] ? "error" : "default"}
+          />
+          {question.regexType === "custom" && (
+            <Input
+              label="Custom Regex"
+              name="customRegexPattern"
+              isRequired
+              value={question.customRegexPattern || ""}
+              onChange={handleInputChange}
+              helperText={errors[`${index}.customRegexPattern`]}
+              state={
+                errors[`${index}.customRegexPattern`] ? "error" : "default"
+              }
+            />
+          )}
+        </>
       )}
 
       <div className={styles["builder__question-actions"]}>

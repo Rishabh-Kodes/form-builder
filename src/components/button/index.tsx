@@ -1,4 +1,4 @@
-import { cn } from "../../utils";
+import { cn } from "../../shared/utils";
 import { ButtonProps } from "./button.type";
 
 import styles from "./button.module.scss";
