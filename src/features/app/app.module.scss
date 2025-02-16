@@ -29,4 +29,16 @@
     flex: 1;
     overflow-y: auto;
   }
+
+  @media (max-width: 768px) {
+    &__header-title {
+      font-size: 18px;
+    }
+
+    &__header-button {
+      height: 32px;
+      font-size: 14px;
+      padding: 8px 16px;
+    }
+  }
 }

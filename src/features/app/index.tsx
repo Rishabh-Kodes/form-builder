@@ -23,7 +23,11 @@ const App = () => {
     <div className={styles["layout"]}>
       <div className={styles["layout__header"]}>
         <h1 className={styles["layout__header-title"]}>Form Builder</h1>
-        <Button onClick={handlePreview} isFullWidth={false}>
+        <Button
+          onClick={handlePreview}
+          isFullWidth={false}
+          className={styles["layout__header-button"]}
+        >
           {showPreview ? "Edit" : "Preview"}
         </Button>
       </div>
