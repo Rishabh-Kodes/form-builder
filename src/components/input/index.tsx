@@ -8,6 +8,7 @@ const Input = ({
   state,
   helperText,
   className,
+  isRequired,
   ...props
 }: InputProps) => {
   const containerClassNames = cn(
@@ -30,7 +31,10 @@ const Input = ({
 
   return (
     <div className={containerClassNames}>
-      <label className={labelClassNames}>{label}</label>
+      <label className={labelClassNames}>
+        {label}{" "}
+        {isRequired && <span className={styles["input__required"]}>*</span>}
+      </label>
       <input className={inputClassNames} {...props} />
       <p className={helperTextClassNames}>{helperText}</p>
     </div>

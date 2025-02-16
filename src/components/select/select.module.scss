@@ -4,13 +4,16 @@
     position: relative;
 
     &::after {
-      content: url("data:image/svg+xml,%3Csvg width='12' height='8' viewBox='0 0 12 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1.41 0.589996L6 5.17L10.59 0.589996L12 2L6 8L0 2L1.41 0.589996Z' fill='%237A5CFA'/%3E%3C/svg%3E");
+      content: "";
       position: absolute;
-      height: 8px;
-      width: 12px;
-      right: 16px;
       top: 50%;
-      pointer-events: none;
+      right: 16px;
+      transform: translateY(calc(-50% - 2px)) rotate(-45deg);
+      height: 8px;
+      width: 8px;
+      border: 2px solid var(--colors-primary);
+      border-top: none;
+      border-right: none;
     }
   }
 
@@ -52,7 +55,6 @@
       outline-width: 2px;
       outline-color: var(--colors-primary);
     }
-
   }
 
   &__helper-text {
